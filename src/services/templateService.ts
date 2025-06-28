@@ -19,24 +19,16 @@ function formatCurrency(value: number): string {
  * Formata percentual
  */
 function formatPercentage(value: number): string {
-  if (!value || isNaN(value)) return '-';
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'percent',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4
-  }).format(value / 100);
+  if (value == null || isNaN(value)) return '-';
+  return (value * 100).toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + '%';
 }
 
 /**
  * Formata percentual raw (sem multiplicar por 100)
  */
 function formatPercentRaw(value: number): string {
-  if (!value || isNaN(value)) return '-';
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'percent',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 4
-  }).format(value);
+  if (value == null || isNaN(value)) return '-';
+  return value.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + '%';
 }
 
 /**
