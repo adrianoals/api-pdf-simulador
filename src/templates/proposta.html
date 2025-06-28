@@ -74,16 +74,24 @@
                     <div class="space-y-1 text-unifisa-purple/90">
                         <p><span class="font-semibold">Valor do Crédito:</span> <span class="font-bold text-unifisa-blue">{{formatCurrency valor_credito}}</span></p>
                         <p><span class="font-semibold">Bem:</span> <span class="text-unifisa-purple/90">{{bem.descricao}}</span></p>
+                        <p><span class="font-semibold">Plano:</span> <span class="text-unifisa-purple/90">{{plano.descricao}}</span></p>
                         <p><span class="font-semibold">Prazo:</span> <span class="text-unifisa-purple/90">{{taxa.prazo}} meses</span></p>
+                        
+                        <!-- Valor da Parcela (sempre mostrar) -->
+                        <p><span class="font-semibold">Valor da Parcela:</span> <span class="font-bold text-unifisa-blue">{{getParcela tipo resultado}}</span></p>
+                        
+                        <!-- Parcela Reduzida (se aplicável) -->
                         {{#if (isPlanoReduzido bem.descricao plano.descricao)}}
                         <p><span class="font-semibold">Parcela Reduzida:</span> <span class="font-bold text-unifisa-blue">{{getParcelaReduzida tipo resultado}}</span></p>
-                        {{else}}
-                        <p><span class="font-semibold">Valor da Parcela:</span> <span class="font-bold text-unifisa-blue">{{getParcela tipo resultado}}</span></p>
                         {{/if}}
-                        {{#if (isPlanoAlpha bem.descricao plano.descricao)}}
-                        <p><span class="font-semibold">Valor Antecipação Parcelas 1 à 5:</span> <span class="text-unifisa-purple/90">{{formatCurrency resultado.valor_antecipacao}}</span></p>
+                        
+                        <!-- 1ª Parcela com Antecipação (sempre mostrar) -->
+                        <p><span class="font-semibold">1ª Parcela com Antecipação:</span> <span class="font-bold text-unifisa-blue">{{getPrimeiraParcela tipo resultado}}</span></p>
+                        
+                        <!-- Valor Antecipação (se for plano Alpha) -->
+                        {{#if isPlanoAlpha bem plano}}
+                        <p><span class="font-semibold">Valor Antecipação Parcelas 1 à 5:</span> <span class="font-bold text-unifisa-blue">{{formatCurrency resultado.valor_antecipacao}}</span></p>
                         {{/if}}
-                        <p><span class="font-semibold">1ª Parcela:</span> <span class="font-bold text-unifisa-blue">{{getPrimeiraParcela tipo resultado}}</span></p>
                     </div>
                 </div>
 

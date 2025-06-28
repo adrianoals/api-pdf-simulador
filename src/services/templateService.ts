@@ -65,8 +65,8 @@ function isPlanoReduzido(bemDescricao: string, planoDescricao: string): boolean 
 /**
  * Verifica se é plano Alpha
  */
-function isPlanoAlpha(bemDescricao: string, planoDescricao: string): boolean {
-  return bemDescricao === "Imóvel" && planoDescricao === "Alpha";
+function isPlanoAlpha(bem: any, plano: any): boolean {
+  return bem?.descricao === "Imóvel" && plano?.descricao === "Alpha";
 }
 
 /**
@@ -87,33 +87,54 @@ function eq(a: any, b: any): boolean {
  * Obtém o valor da parcela baseado no tipo de seguro
  */
 function getParcela(tipo: string, resultado: any): number {
-  if (!resultado) return 0;
-  if (tipo === 'seg1') {
-    return resultado.parcela_com_seguro || 0;
+  if (!resultado) {
+    return 0;
   }
-  return resultado.parcela_sem_seguro || 0;
+  
+  let valor = 0;
+  if (tipo === 'seg1') {
+    valor = resultado.parcela_com_seguro || 0;
+  } else {
+    valor = resultado.parcela_sem_seguro || 0;
+  }
+  
+  return valor;
 }
 
 /**
  * Obtém o valor da parcela reduzida baseado no tipo de seguro
  */
 function getParcelaReduzida(tipo: string, resultado: any): number {
-  if (!resultado) return 0;
-  if (tipo === 'seg1') {
-    return resultado.parcela_reduzida_com_seguro || 0;
+  if (!resultado) {
+    return 0;
   }
-  return resultado.parcela_reduzida_sem_seguro || 0;
+  
+  let valor = 0;
+  if (tipo === 'seg1') {
+    valor = resultado.parcela_reduzida_com_seguro || 0;
+  } else {
+    valor = resultado.parcela_reduzida_sem_seguro || 0;
+  }
+  
+  return valor;
 }
 
 /**
  * Obtém o valor da primeira parcela baseado no tipo de seguro
  */
 function getPrimeiraParcela(tipo: string, resultado: any): number {
-  if (!resultado) return 0;
-  if (tipo === 'seg1') {
-    return resultado.primeira_parcela_antecipacao_com_seguro || 0;
+  if (!resultado) {
+    return 0;
   }
-  return resultado.primeira_parcela_antecipacao_sem_seguro || 0;
+  
+  let valor = 0;
+  if (tipo === 'seg1') {
+    valor = resultado.primeira_parcela_antecipacao_com_seguro || 0;
+  } else {
+    valor = resultado.primeira_parcela_antecipacao_sem_seguro || 0;
+  }
+  
+  return valor;
 }
 
 /**
@@ -194,9 +215,7 @@ function processConditionals(template: string, data: any): string {
   const ifRegex = /\{\{#if\s+([^}]+)\}\}([\s\S]*?)\{\{\/if\}\}/g;
   
   return template.replace(ifRegex, (match, condition, content) => {
-    console.log(`🔍 Processando condicional: ${condition}`);
     const isTrue = evaluateCondition(condition, data);
-    console.log(`🔍 Resultado da condicional: ${isTrue}`);
     return isTrue ? content : '';
   });
 }
@@ -222,7 +241,7 @@ function processLoops(template: string, data: any): string {
       itemContent = replaceVariables(itemContent, item);
       
       // Processa condicionais dentro do loop
-      itemContent = processConditionals(itemContent, { ...data, ...item });
+      itemContent = processConditionals(itemContent, item);
       
       return itemContent;
     }).join('');
@@ -247,7 +266,6 @@ function evaluateCondition(condition: string, data: any): boolean {
       const [, value1, value2] = match;
       const val1 = getNestedValue(data, value1.trim().replace(/['"]/g, ''));
       const val2 = value2.trim().replace(/['"]/g, '');
-      console.log(`🔍 Comparando: "${val1}" === "${val2}"`);
       return val1 === val2;
     }
   }
@@ -261,8 +279,6 @@ function evaluateCondition(condition: string, data: any): boolean {
  * Avalia uma função helper
  */
 function evaluateHelperFunction(condition: string, data: any): boolean {
-  console.log(`🔍 Avaliando função helper: ${condition}`);
-  
   // eq(tipo "seg1")
   if (condition.includes('eq') && condition.includes('tipo')) {
     const match = condition.match(/eq\s*\(\s*([^)]+)\s+([^)]+)\s*\)/);
@@ -270,7 +286,6 @@ function evaluateHelperFunction(condition: string, data: any): boolean {
       const [, value1, value2] = match;
       const val1 = getNestedValue(data, value1.trim());
       const val2 = value2.trim().replace(/['"]/g, '');
-      console.log(`🔍 Comparando tipo: "${val1}" === "${val2}"`);
       return val1 === val2;
     }
   }
@@ -282,7 +297,8 @@ function evaluateHelperFunction(condition: string, data: any): boolean {
       const [, bemPath, planoPath] = match;
       const bemDescricao = getNestedValue(data, bemPath.trim());
       const planoDescricao = getNestedValue(data, planoPath.trim());
-      return isPlanoReduzido(bemDescricao, planoDescricao);
+      const result = isPlanoReduzido(bemDescricao, planoDescricao);
+      return result;
     }
   }
   
@@ -293,7 +309,8 @@ function evaluateHelperFunction(condition: string, data: any): boolean {
       const [, bemPath, planoPath] = match;
       const bemDescricao = getNestedValue(data, bemPath.trim());
       const planoDescricao = getNestedValue(data, planoPath.trim());
-      return isPlanoAlpha(bemDescricao, planoDescricao);
+      const result = isPlanoAlpha(bemDescricao, planoDescricao);
+      return result;
     }
   }
   
@@ -475,7 +492,6 @@ export function generateHtmlForSimulacao(simulacao: SimulacaoQuery): string {
     
     return template;
   } catch (error) {
-    console.error('Erro ao gerar HTML para simulação:', error);
     throw error;
   }
 }
@@ -488,11 +504,16 @@ export function generateHtmlForMultipleSimulacoes(simulacoes: SimulacaoQuery[]):
     const templatePath = path.join(__dirname, '../templates/proposta.html');
     let template = fs.readFileSync(templatePath, 'utf-8');
     
-    // Converte arrays de resultados para objetos únicos
+    // Forçar conversão de bem e plano para objeto, caso venham como string
     const simulacoesWithResults = simulacoes.map(sim => ({
       ...sim,
+      bem: typeof sim.bem === 'string' ? { descricao: sim.bem } : sim.bem,
+      plano: typeof sim.plano === 'string' ? { descricao: sim.plano } : sim.plano,
       resultado: sim.resultado?.[0] || {}
     }));
+
+    // DEBUG: Verificar estrutura dos dados enviados ao template
+    console.log('DEBUG simulacoesWithResults:', JSON.stringify(simulacoesWithResults, null, 2));
     
     // Extrai dados comuns da primeira simulação para o contexto global
     const firstSimulacao = simulacoesWithResults[0];
@@ -510,7 +531,6 @@ export function generateHtmlForMultipleSimulacoes(simulacoes: SimulacaoQuery[]):
     
     return template;
   } catch (error) {
-    console.error('Erro ao gerar HTML para múltiplas simulações:', error);
     throw error;
   }
 } 

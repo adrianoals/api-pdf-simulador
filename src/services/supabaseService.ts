@@ -121,13 +121,8 @@ function convertFunctionData(functionData: any): SimulacaoQuery {
       email: vendedor.email || '',
       telefone: vendedor.telefone || ''
     },
-    bem: {
-      descricao: functionData.bem || '',
-      fundo_reserva: taxas.fundo_reserva || 0
-    },
-    plano: {
-      descricao: functionData.plano || ''
-    },
+    bem: { descricao: functionData.bem || '' , fundo_reserva: taxas.fundo_reserva || 0 },
+    plano: { descricao: functionData.plano || '' },
     taxa: {
       taxa_administracao: taxas.administracao || 0,
       taxa_antecipacao: taxas.antecipacao || 0,
