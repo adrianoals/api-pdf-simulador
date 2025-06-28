@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import pdfRoutes from './routes/pdf';
+import path from 'path';
 
 // Carregar variáveis de ambiente
 dotenv.config();
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 
 // Rotas
 app.use('/api/pdf', pdfRoutes);
+app.use('/public', express.static(path.join(__dirname, '../public')));
 
 // Rota de health check
 app.get('/health', (req, res) => {
