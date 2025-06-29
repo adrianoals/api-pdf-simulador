@@ -80,17 +80,6 @@ function evaluateHelperFunction(condition, data) {
             return val1 === val2;
         }
     }
-    // isPlanoReduzido(bem.descricao plano.descricao)
-    if (condition.includes('isPlanoReduzido')) {
-        const match = condition.match(/isPlanoReduzido\s*\(\s*([^)]+)\s+([^)]+)\s*\)/);
-        if (match) {
-            const [, bemPath, planoPath] = match;
-            const bemDescricao = getNestedValue(data, bemPath.trim());
-            const planoDescricao = getNestedValue(data, planoPath.trim());
-            const result = (0, businessLogic_1.isPlanoReduzido)(bemDescricao, planoDescricao);
-            return result;
-        }
-    }
     return false;
 }
 /**

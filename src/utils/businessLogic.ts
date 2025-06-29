@@ -3,16 +3,6 @@
  */
 
 /**
- * Verifica se é plano reduzido
- */
-export function isPlanoReduzido(bemDescricao: string, planoDescricao: string): boolean {
-  return (
-    (bemDescricao === "Imóvel" && ["Sigma 25%", "Ômega 25%", "Gamma 25%", "Ômega 50%", "Delta 50%"].includes(planoDescricao)) ||
-    (["Automóvel", "Máquinário", "Embarcação"].includes(bemDescricao) && ["Gamma 30%", "Betha 30%"].includes(planoDescricao))
-  );
-}
-
-/**
  * Obtém o valor da parcela baseado no tipo de seguro
  */
 export function getParcela(tipo: string, resultado: any): number {

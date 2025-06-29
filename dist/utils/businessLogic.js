@@ -3,7 +3,6 @@
  * Funções de negócio específicas para simulações de crédito/seguro
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isPlanoReduzido = isPlanoReduzido;
 exports.getParcela = getParcela;
 exports.getParcelaReduzida = getParcelaReduzida;
 exports.getPrimeiraParcela = getPrimeiraParcela;
@@ -14,13 +13,6 @@ exports.getPrazoAtualizadoAbatimento = getPrazoAtualizadoAbatimento;
 exports.getCurrentYear = getCurrentYear;
 exports.add = add;
 exports.eq = eq;
-/**
- * Verifica se é plano reduzido
- */
-function isPlanoReduzido(bemDescricao, planoDescricao) {
-    return ((bemDescricao === "Imóvel" && ["Sigma 25%", "Ômega 25%", "Gamma 25%", "Ômega 50%", "Delta 50%"].includes(planoDescricao)) ||
-        (["Automóvel", "Máquinário", "Embarcação"].includes(bemDescricao) && ["Gamma 30%", "Betha 30%"].includes(planoDescricao)));
-}
 /**
  * Obtém o valor da parcela baseado no tipo de seguro
  */

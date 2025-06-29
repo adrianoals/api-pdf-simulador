@@ -1,6 +1,5 @@
 import { formatCurrency, formatPercent, formatPercentRaw, formatDate } from './formatters';
 import { 
-  isPlanoReduzido, 
   getParcela, 
   getParcelaReduzida, 
   getPrimeiraParcela,
@@ -94,18 +93,6 @@ function evaluateHelperFunction(condition: string, data: any): boolean {
       const val1 = getNestedValue(data, value1.trim());
       const val2 = value2.trim().replace(/['"]/g, '');
       return val1 === val2;
-    }
-  }
-  
-  // isPlanoReduzido(bem.descricao plano.descricao)
-  if (condition.includes('isPlanoReduzido')) {
-    const match = condition.match(/isPlanoReduzido\s*\(\s*([^)]+)\s+([^)]+)\s*\)/);
-    if (match) {
-      const [, bemPath, planoPath] = match;
-      const bemDescricao = getNestedValue(data, bemPath.trim());
-      const planoDescricao = getNestedValue(data, planoPath.trim());
-      const result = isPlanoReduzido(bemDescricao, planoDescricao);
-      return result;
     }
   }
   

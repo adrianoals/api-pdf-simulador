@@ -79,7 +79,15 @@
                         <p><span class="font-semibold">Valor da Parcela:</span> <span class="font-bold text-unifisa-blue">{{getParcela tipo resultado}}</span></p>
                         
                         <!-- Parcela Reduzida (se aplicável) -->
-                        {{#if (isPlanoReduzido bem.descricao plano.descricao)}}
+                        {{#if eq resultado.tipo_plano "25"}}
+                        <p><span class="font-semibold">Parcela Reduzida:</span> <span class="font-bold text-unifisa-blue">{{getParcelaReduzida tipo resultado}}</span></p>
+                        {{/if}}
+                        
+                        {{#if eq resultado.tipo_plano "30"}}
+                        <p><span class="font-semibold">Parcela Reduzida:</span> <span class="font-bold text-unifisa-blue">{{getParcelaReduzida tipo resultado}}</span></p>
+                        {{/if}}
+                        
+                        {{#if eq resultado.tipo_plano "50"}}
                         <p><span class="font-semibold">Parcela Reduzida:</span> <span class="font-bold text-unifisa-blue">{{getParcelaReduzida tipo resultado}}</span></p>
                         {{/if}}
                         

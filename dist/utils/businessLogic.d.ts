@@ -2,10 +2,6 @@
  * Funções de negócio específicas para simulações de crédito/seguro
  */
 /**
- * Verifica se é plano reduzido
- */
-export declare function isPlanoReduzido(bemDescricao: string, planoDescricao: string): boolean;
-/**
  * Obtém o valor da parcela baseado no tipo de seguro
  */
 export declare function getParcela(tipo: string, resultado: any): number;
