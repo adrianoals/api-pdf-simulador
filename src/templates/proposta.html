@@ -75,8 +75,13 @@
                         <p><span class="font-semibold">Plano:</span> <span class="text-unifisa-purple/90">{{plano.descricao}}</span></p>
                         <p><span class="font-semibold">Prazo:</span> <span class="text-unifisa-purple/90">{{taxa.prazo}} meses</span></p>
                         
-                        <!-- Valor da Parcela (sempre mostrar) -->
-                        <p><span class="font-semibold">Valor da Parcela:</span> <span class="font-bold text-unifisa-blue">{{getParcela tipo resultado}}</span></p>
+                        <!-- Valor da Parcela (esconde para planos reduzidos) -->
+                        <p class="font-semibold text-unifisa-blue
+                          {{#if eq resultado.tipo_plano "25"}}hidden{{/if}}
+                          {{#if eq resultado.tipo_plano "30"}}hidden{{/if}}
+                          {{#if eq resultado.tipo_plano "50"}}hidden{{/if}}">
+                          Valor da Parcela: <span class="font-bold text-unifisa-blue">{{getParcela tipo resultado}}</span>
+                        </p>
                         
                         <!-- Parcela Reduzida (se aplicável) -->
                         {{#if eq resultado.tipo_plano "25"}}
