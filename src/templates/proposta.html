@@ -118,18 +118,49 @@
         .gap-y-1 {
             row-gap: 0.25rem;
         }
+        
+        /* Evitar quebra de cards e forçar nova página entre simulações no PDF */
+        @media print {
+          .avoid-break {
+            break-inside: avoid;
+            page-break-inside: avoid;
+          }
+          .page-break {
+            page-break-before: always;
+            break-before: page;
+          }
+        }
+        
+        /* Forçar layout desktop 950px no PDF/print */
+        @media print {
+          body, .max-w-6xl {
+            width: 950px !important;
+            min-width: 950px !important;
+            max-width: 950px !important;
+            margin: 0 auto !important;
+          }
+          .grid-cols-1, .md\:grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+          .simulacao-header {
+            padding-top: 2.5rem !important;
+          }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-unifisa-blue to-unifisa-dark-blue min-h-screen font-sans">
     <div class="max-w-6xl mx-auto py-10 px-4">
-        <!-- Header da proposta -->
-        <div class="bg-unifisa-light-blue p-6 rounded-lg shadow-xl mb-8 text-center">
+        <!-- Simulações -->
+        {{#each simulacoes}}
+        {{#if @index}}
+        <div class="page-break"></div>
+        {{/if}}
+        <!-- Header da proposta (agora dentro de cada simulação) -->
+        <div class="bg-unifisa-light-blue p-6 rounded-lg mb-8 text-center simulacao-header">
             <img src="/public/logo-simbolo-transparente.png" alt="Logo Unifisa" width="80" height="80" class="mx-auto mb-4" />
             <h1 class="text-3xl font-bold text-unifisa-purple mb-2">Proposta de Consórcio</h1>
             <p class="text-unifisa-purple/80 max-w-2xl mx-auto">Olá, <span class="font-semibold">{{cliente.nome}}</span>, esta é a sua proposta personalizada. Verifique as opções abaixo.</p>
-
             <div class="border-t border-unifisa-border my-4"></div>
-            
             <div class="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-6 text-sm">
                 <div class="flex items-center gap-2 text-unifisa-purple/80">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -137,7 +168,6 @@
                     </svg>
                     <p>Preparada por: <span class="font-semibold">{{vendedor.nome}}</span></p>
                 </div>
-
                 {{#if vencimento_proposta}}
                 <div class="flex items-center gap-2 text-unifisa-blue">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -148,10 +178,7 @@
                 {{/if}}
             </div>
         </div>
-
-        <!-- Simulações -->
-        {{#each simulacoes}}
-        <div class="bg-unifisa-light-blue rounded-2xl shadow-2xl border border-unifisa-border p-4 sm:p-6 md:p-8 space-y-8 mb-8">
+        <div class="bg-unifisa-light-blue rounded-2xl shadow-2xl border border-unifisa-border p-4 sm:p-6 md:p-8 space-y-8 mb-8 avoid-break">
             <div class="text-center">
                 <span class="inline-block bg-unifisa-yellow text-unifisa-purple font-semibold px-4 py-1 rounded-full text-sm shadow-md">
                     Simulação {{add @index 1}}
@@ -292,12 +319,6 @@
             </div>
         </div>
         {{/each}}
-
-        <!-- Footer -->
-        <footer class="text-center text-white/80 mt-10 text-sm">
-            <p>© {{getCurrentYear}} Unifisa. Todos os direitos reservados.</p>
-            <p>Esta é uma simulação, os valores podem sofrer alterações.</p>
-        </footer>
     </div>
 </body>
 </html> 

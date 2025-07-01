@@ -74,8 +74,8 @@ export class PDFService {
 
       // Configurar viewport para melhor renderização
       await page.setViewport({
-        width: 1200,
-        height: 800,
+        width: 950,
+        height: 1400,
         deviceScaleFactor: 2 // Melhor qualidade para PDF
       });
 
