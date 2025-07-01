@@ -4,23 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proposta de Consórcio - Unifisa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'unifisa-blue': '#2196F3',
-                        'unifisa-dark-blue': '#1565C0',
-                        'unifisa-purple': '#2B176C',
-                        'unifisa-yellow': '#FFD600',
-                        'unifisa-light-blue': '#E3F2FD',
-                        'unifisa-border': '#BBDEFB'
-                    }
-                }
-            }
+    <link rel="stylesheet" href="/public/styles.css">
+    <style>
+        /* Estilos inline para garantir compatibilidade com PDF */
+        @page {
+            margin: 0;
+            size: A4;
         }
-    </script>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        /* Garantir que gradientes funcionem no PDF */
+        .bg-gradient-to-br {
+            background: linear-gradient(to bottom right, #2196F3, #1565C0);
+        }
+        
+        /* Garantir que sombras funcionem no PDF */
+        .shadow-xl {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .shadow-2xl {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .shadow {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        
+        .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        /* Garantir que bordas arredondadas funcionem no PDF */
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .rounded-xl {
+            border-radius: 0.75rem;
+        }
+        
+        .rounded-2xl {
+            border-radius: 1rem;
+        }
+        
+        .rounded-full {
+            border-radius: 9999px;
+        }
+        
+        /* Garantir que opacidades funcionem no PDF */
+        .text-unifisa-purple\/80 {
+            color: rgba(43, 23, 108, 0.8);
+        }
+        
+        .text-unifisa-purple\/90 {
+            color: rgba(43, 23, 108, 0.9);
+        }
+        
+        .text-white\/80 {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Garantir que flexbox e grid funcionem no PDF */
+        .flex {
+            display: flex;
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        /* Garantir que espaçamentos funcionem no PDF */
+        .space-y-1 > * + * {
+            margin-top: 0.25rem;
+        }
+        
+        .space-y-8 > * + * {
+            margin-top: 2rem;
+        }
+        
+        .gap-2 {
+            gap: 0.5rem;
+        }
+        
+        .gap-3 {
+            gap: 0.75rem;
+        }
+        
+        .gap-6 {
+            gap: 1.5rem;
+        }
+        
+        .gap-8 {
+            gap: 2rem;
+        }
+        
+        .gap-x-8 {
+            column-gap: 2rem;
+        }
+        
+        .gap-y-1 {
+            row-gap: 0.25rem;
+        }
+    </style>
 </head>
 <body class="bg-gradient-to-br from-unifisa-blue to-unifisa-dark-blue min-h-screen font-sans">
     <div class="max-w-6xl mx-auto py-10 px-4">

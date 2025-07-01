@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fontes do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Estilos customizados para PDF */
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Garantir que as cores customizadas funcionem no PDF */
+  .bg-unifisa-blue {
+    background-color: #2196F3;
+  }
+  .bg-unifisa-dark-blue {
+    background-color: #1565C0;
+  }
+  .bg-unifisa-purple {
+    background-color: #2B176C;
+  }
+  .bg-unifisa-yellow {
+    background-color: #FFD600;
+  }
+  .bg-unifisa-light-blue {
+    background-color: #E3F2FD;
+  }
+  .bg-unifisa-border {
+    background-color: #BBDEFB;
+  }
+  
+  .text-unifisa-blue {
+    color: #2196F3;
+  }
+  .text-unifisa-dark-blue {
+    color: #1565C0;
+  }
+  .text-unifisa-purple {
+    color: #2B176C;
+  }
+  .text-unifisa-yellow {
+    color: #FFD600;
+  }
+  .text-unifisa-light-blue {
+    color: #E3F2FD;
+  }
+  .text-unifisa-border {
+    color: #BBDEFB;
+  }
+  
+  .border-unifisa-blue {
+    border-color: #2196F3;
+  }
+  .border-unifisa-border {
+    border-color: #BBDEFB;
+  }
+} 
