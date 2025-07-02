@@ -107,9 +107,6 @@ export class PDFService {
    * Gera PDF de proposta de consórcio
    */
   async generatePropostaPDF(simulacoes: SimulacaoQuery[], html: string): Promise<Buffer> {
-    // Geração antiga (todas as simulações em um HTML só)
-    // return this.generatePDF(html, options);
-    // Nova abordagem: gerar um PDF por simulação e unir
     const options: PDFOptions = {
       format: 'A4',
       margin: {
@@ -124,10 +121,16 @@ export class PDFService {
     // Separar o HTML para cada simulação
     const htmls: string[] = this.splitHtmlBySimulacao(html, simulacoes.length);
     const pdfBuffers: Buffer[] = [];
+    // Adicionar a capa como primeira página
+    const capaPath = path.join(__dirname, '../../public/capa.pdf');
+    if (fs.existsSync(capaPath)) {
+      const capaBuffer = fs.readFileSync(capaPath);
+      pdfBuffers.push(capaBuffer);
+    }
     for (let i = 0; i < simulacoes.length; i++) {
       pdfBuffers.push(await this.generatePDF(htmls[i], options));
     }
-    // Unir todos os PDFs
+    // Unir todos os PDFs (capa + simulações)
     return await this.mergePDFs(pdfBuffers);
   }
 
