@@ -130,7 +130,13 @@ export class PDFService {
     for (let i = 0; i < simulacoes.length; i++) {
       pdfBuffers.push(await this.generatePDF(htmls[i], options));
     }
-    // Unir todos os PDFs (capa + simulações)
+    // Adicionar o final.pdf como última página
+    const finalPath = path.join(__dirname, '../../public/final.pdf');
+    if (fs.existsSync(finalPath)) {
+      const finalBuffer = fs.readFileSync(finalPath);
+      pdfBuffers.push(finalBuffer);
+    }
+    // Unir todos os PDFs (capa + simulações + final)
     return await this.mergePDFs(pdfBuffers);
   }
 
