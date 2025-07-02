@@ -3,6 +3,7 @@ import { SimulacaoQuery } from '../types';
 import fs from 'fs';
 import path from 'path';
 import { PDFDocument } from 'pdf-lib';
+import PQueue from 'p-queue';
 
 export interface PDFOptions {
   format?: 'A4' | 'Letter' | 'Legal';
@@ -183,4 +184,12 @@ export class PDFService {
 }
 
 // Instância singleton
-export const pdfService = new PDFService(); 
+export const pdfService = new PDFService();
+
+// Fila global para limitar PDFs simultâneos
+const pdfQueue = new PQueue({ concurrency: 3 });
+
+// Método para enfileirar a geração de PDFs
+export function queueGeneratePropostaPDF(simulacoes: SimulacaoQuery[], html: string): Promise<Buffer> {
+  return pdfQueue.add(() => pdfService.generatePropostaPDF(simulacoes, html)) as Promise<Buffer>;
+} 
