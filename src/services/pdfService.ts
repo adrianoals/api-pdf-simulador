@@ -76,8 +76,8 @@ export class PDFService {
       // Configurar viewport para melhor renderização
       await page.setViewport({
         width: 950,
-        height: 1400,
-        deviceScaleFactor: 2 // Melhor qualidade para PDF
+        height: 1345,
+        deviceScaleFactor: 2
       });
 
       // Definir conteúdo HTML
@@ -93,7 +93,7 @@ export class PDFService {
         format: options.format || 'A4',
         margin: { top: '0', right: '0', bottom: '0', left: '0' },
         printBackground: options.printBackground !== false,
-        preferCSSPageSize: options.preferCSSPageSize || false
+        preferCSSPageSize: true
       });
 
       return Buffer.from(pdfBuffer);
