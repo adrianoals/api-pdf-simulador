@@ -1,5 +1,7 @@
 # Unifisa PDF API
 
+> **[Leia em Portugues](./README.pt-BR.md)**
+
 REST API built with Node.js, Express, and TypeScript that generates consortium proposal PDFs for the Unifisa platform. It fetches simulation data from Supabase, renders HTML templates styled with Tailwind CSS, and converts them to PDF using Puppeteer.
 
 ## Tech Stack
